@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS `client` (
+    `id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
+    `short_name` VARCHAR(255) NOT NULL,
+    `address` TEXT NOT NULL,
+    `legal_type` INT UNSIGNED NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
