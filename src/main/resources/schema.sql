@@ -6,3 +6,20 @@ CREATE TABLE IF NOT EXISTS `client` (
     `legal_type` INT UNSIGNED NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `bank` (
+    `id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
+    `bic` CHAR(9) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `deposit` (
+    `id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
+    `client_id` INT UNSIGNED NOT NULL,
+    `bank_id` INT UNSIGNED NOT NULL,
+    `date_opened` TIMESTAMP NOT NULL,
+    `percent` FLOAT NOT NULL,
+    `months` INT UNSIGNED NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB;

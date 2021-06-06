@@ -1,16 +1,25 @@
 package com.banking.entity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
-@Table(name = "client")
-public class ClientEntity {
+public class Client implements com.banking.entity.Entity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
+    @NotBlank
     private String name;
+    @NotBlank
     private String shortName;
+    @NotBlank
     private String address;
+    @NotNull
     private LegalEntityType legalType;
 
     public String getId() {
