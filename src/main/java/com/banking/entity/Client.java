@@ -1,12 +1,13 @@
 package com.banking.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.Set;
 
 @Entity
 public class Client implements com.banking.entity.Entity {
@@ -21,6 +22,8 @@ public class Client implements com.banking.entity.Entity {
     private String address;
     @NotNull
     private LegalEntityType legalType;
+    @OneToMany(mappedBy = "client")
+    private Set<Deposit> deposits;
 
     public String getId() {
         return id;
@@ -60,5 +63,14 @@ public class Client implements com.banking.entity.Entity {
 
     public void setLegalType(LegalEntityType legalType) {
         this.legalType = legalType;
+    }
+
+    public Set<Deposit> getDeposits() {
+        return deposits;
+    }
+
+    @JsonIgnore
+    public void setDeposits(Set<Deposit> deposits) {
+        this.deposits = deposits;
     }
 }

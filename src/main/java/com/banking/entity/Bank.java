@@ -1,17 +1,25 @@
 package com.banking.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.Length;
+
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Entity
 public class Bank implements com.banking.entity.Entity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
+    @NotBlank
     private String name;
+    @NotBlank
+    @Length(min = 9, max = 9)
     private String BIC;
+    @OneToMany(mappedBy = "bank")
+    private Set<Deposit> deposits;
 
     public String getId() {
         return id;
@@ -35,5 +43,14 @@ public class Bank implements com.banking.entity.Entity {
 
     public void setBIC(String BIC) {
         this.BIC = BIC;
+    }
+
+    @JsonIgnore
+    public Set<Deposit> getDeposits() {
+        return deposits;
+    }
+
+    public void setDeposits(Set<Deposit> deposits) {
+        this.deposits = deposits;
     }
 }
