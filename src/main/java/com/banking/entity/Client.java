@@ -1,6 +1,8 @@
 package com.banking.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -10,6 +12,8 @@ import javax.validation.constraints.Pattern;
 import java.util.Set;
 
 @Entity
+@SQLDelete(sql = "UPDATE client SET is_deleted = 1 WHERE id=?")
+@Where(clause = "is_deleted = 0")
 public class Client implements com.banking.entity.Entity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,9 +24,10 @@ public class Client implements com.banking.entity.Entity {
     private String shortName;
     @NotBlank
     private String address;
+    private boolean isDeleted = false;
     @NotNull
     private LegalEntityType legalType;
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE)
     private Set<Deposit> deposits;
 
     public String getId() {

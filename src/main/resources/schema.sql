@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS `client` (
     `short_name` VARCHAR(255) NOT NULL,
     `address` TEXT NOT NULL,
     `legal_type` INT UNSIGNED NOT NULL,
+    `is_deleted` TINYINT(1) UNSIGNED DEFAULT 0,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 
@@ -11,6 +12,7 @@ CREATE TABLE IF NOT EXISTS `bank` (
     `id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
     `name` VARCHAR(255) NOT NULL,
     `bic` CHAR(9) NOT NULL,
+    `is_deleted` TINYINT(1) UNSIGNED DEFAULT 0,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 
@@ -21,5 +23,6 @@ CREATE TABLE IF NOT EXISTS `deposit` (
     `date_opened` TIMESTAMP NOT NULL,
     `percent` FLOAT NOT NULL,
     `months` INT UNSIGNED NOT NULL,
+    `is_deleted` TINYINT(1) UNSIGNED DEFAULT 0,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;

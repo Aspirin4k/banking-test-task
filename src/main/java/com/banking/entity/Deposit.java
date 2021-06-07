@@ -1,14 +1,17 @@
 package com.banking.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Entity
+@SQLDelete(sql = "UPDATE deposit SET is_deleted = 1 WHERE id=?")
+@Where(clause = "is_deleted = 0")
 public class Deposit implements com.banking.entity.Entity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,14 +25,19 @@ public class Deposit implements com.banking.entity.Entity {
     @Min(1)
     @NotNull
     private Integer months;
-    @NotNull
+    private boolean isDeleted = false;
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
-    @NotNull
+    @NotBlank
+    @Transient
+    private String clientId;
     @ManyToOne
     @JoinColumn(name = "bank_id")
     private Bank bank;
+    @NotBlank
+    @Transient
+    private String bankId;
 
     public String getId() {
         return id;
@@ -68,9 +76,10 @@ public class Deposit implements com.banking.entity.Entity {
     }
 
     public String getClientId() {
-        return client.getId();
+        return null == client ? clientId : client.getId();
     }
 
+    @JsonIgnore
     public void setClient(Client client) {
         this.client = client;
     }
@@ -80,10 +89,19 @@ public class Deposit implements com.banking.entity.Entity {
     }
 
     public String getBankId() {
-        return bank.getId();
+        return null == bank ? bankId : bank.getId();
     }
 
+    @JsonIgnore
     public void setBank(Bank bank) {
         this.bank = bank;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public void setBankId(String bankId) {
+        this.bankId = bankId;
     }
 }

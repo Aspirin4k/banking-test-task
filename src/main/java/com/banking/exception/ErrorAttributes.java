@@ -3,6 +3,8 @@ package com.banking.exception;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.context.request.WebRequest;
 
@@ -39,8 +41,19 @@ public class ErrorAttributes extends DefaultErrorAttributes {
         }
 
         if (error instanceof MethodArgumentNotValidException) {
-            List<String> errors = new ArrayList<>(1);
-            errors.add(error.getLocalizedMessage());
+            List<ObjectError> bindings = ((MethodArgumentNotValidException) error).getBindingResult().getAllErrors();
+
+            List<String> errors = new ArrayList<>(bindings.size());
+            for (ObjectError bindingError : bindings) {
+                if (bindingError instanceof FieldError) {
+                    errors.add(
+                            ((FieldError) bindingError).getField() + " "
+                            + bindingError.getDefaultMessage()
+                    );
+                } else {
+                    errors.add(bindingError.toString());
+                }
+            }
 
             errorAttributes.put("details", errors);
         }
