@@ -1,11 +1,11 @@
 package com.banking.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
@@ -16,7 +16,7 @@ public class Bank implements com.banking.entity.Entity {
     @NotBlank
     private String name;
     @NotBlank
-    @Length(min = 9, max = 9)
+    @Size(min = 9, max = 9)
     private String BIC;
     @OneToMany(mappedBy = "bank")
     private Set<Deposit> deposits;

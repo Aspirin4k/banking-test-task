@@ -3,6 +3,7 @@ package com.banking.exception;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.validation.ConstraintViolation;
@@ -33,6 +34,13 @@ public class ErrorAttributes extends DefaultErrorAttributes {
                         constraintViolation.getMessage()
                 );
             }
+
+            errorAttributes.put("details", errors);
+        }
+
+        if (error instanceof MethodArgumentNotValidException) {
+            List<String> errors = new ArrayList<>(1);
+            errors.add(error.getLocalizedMessage());
 
             errorAttributes.put("details", errors);
         }

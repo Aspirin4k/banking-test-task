@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.io.IOException;
@@ -54,7 +55,7 @@ abstract public class EntityController<T extends Entity> {
 
     @PutMapping(value = "/{id}")
     public @ResponseBody ResponseEntity<Void> updateEntity(
-            @RequestBody T entity,
+            @Valid @RequestBody T entity,
             @PathVariable("id") String id
     ) throws EntityNotFoundException {
         if (!this.repo.existsById(id)) {
