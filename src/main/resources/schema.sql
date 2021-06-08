@@ -6,15 +6,16 @@ CREATE TABLE IF NOT EXISTS `client` (
     `legal_type` INT UNSIGNED NOT NULL,
     `is_deleted` TINYINT(1) UNSIGNED DEFAULT 0,
     PRIMARY KEY (`id`)
-) ENGINE = InnoDB;
+);
 
 CREATE TABLE IF NOT EXISTS `bank` (
     `id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
     `name` VARCHAR(255) NOT NULL,
-    `bic` CHAR(9) NOT NULL,
+    `bic` VARCHAR(255) NOT NULL,
     `is_deleted` TINYINT(1) UNSIGNED DEFAULT 0,
-    PRIMARY KEY (`id`)
-) ENGINE = InnoDB;
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `idx_bic` (`bic`)
+);
 
 CREATE TABLE IF NOT EXISTS `deposit` (
     `id` INT UNSIGNED AUTO_INCREMENT NOT NULL,
@@ -25,4 +26,4 @@ CREATE TABLE IF NOT EXISTS `deposit` (
     `months` INT UNSIGNED NOT NULL,
     `is_deleted` TINYINT(1) UNSIGNED DEFAULT 0,
     PRIMARY KEY (`id`)
-) ENGINE = InnoDB;
+);

@@ -3,12 +3,12 @@ package com.banking.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.util.Set;
 
 @Entity
@@ -19,10 +19,13 @@ public class Client implements com.banking.entity.Entity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     @NotBlank
+    @Length(max = 255)
     private String name;
     @NotBlank
+    @Length(max = 255)
     private String shortName;
     @NotBlank
+    @Length(max = 255)
     private String address;
     private boolean isDeleted = false;
     @NotNull

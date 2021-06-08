@@ -1,6 +1,7 @@
 package com.banking.controller;
 
 import com.banking.exception.EntityNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,6 +15,14 @@ public class ValidationHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     public void handleConstraintViolationException(
             ConstraintViolationException exception,
+            ServletWebRequest webRequest
+    ) throws IOException {
+        webRequest.getResponse().sendError(HttpStatus.BAD_REQUEST.value(), exception.getLocalizedMessage());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public void handleSQLConstraintViolationException(
+            DataIntegrityViolationException exception,
             ServletWebRequest webRequest
     ) throws IOException {
         webRequest.getResponse().sendError(HttpStatus.BAD_REQUEST.value(), exception.getLocalizedMessage());
