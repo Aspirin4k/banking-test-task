@@ -27,3 +27,10 @@ client:
     address: Moscow
     legal_type: 2
     is_deleted: 0
+  -
+    id: 5
+    name: Richard
+    short_name: R
+    address: Ekat
+    legal_type: 1
+    is_deleted: 0

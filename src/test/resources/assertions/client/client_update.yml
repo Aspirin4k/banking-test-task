@@ -22,8 +22,8 @@ client:
     is_deleted: 1
   -
     id: 4
-    name: Ibragim
-    short_name: I
-    address: Moscow
-    legal_type: 2
+    name: Richard
+    short_name: R
+    address: Ekat
+    legal_type: 1
     is_deleted: 0

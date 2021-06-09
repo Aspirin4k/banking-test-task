@@ -70,7 +70,9 @@ abstract public class EntityController<T extends Entity> {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deleteEntity(@PathVariable("id") String id) {
-        this.repo.deleteById(id);
+        if (this.repo.existsById(id)) {
+            this.repo.deleteById(id);
+        }
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .body(null);
