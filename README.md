@@ -6,6 +6,12 @@
 
 ## dev
 
+To start local db:
+
+```
+docker-compose -f docker-compose-database.yml up
+```
+
 To run application:
 
 ```

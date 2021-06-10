@@ -1,0 +1,11 @@
+version: '3.5'
+
+services:
+  mysql:
+    image: percona:8.0.15-6
+    container_name: banking-db
+    ports:
+      - 52000:3306
+    restart: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: root
