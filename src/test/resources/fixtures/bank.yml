@@ -1,0 +1,26 @@
+bank:
+  -
+    id: 1
+    name: Bank
+    bic: 123456789
+    is_deleted: 0
+  -
+    id: 2
+    name: Sberbank
+    bic: 123456789_deleted
+    is_deleted: 1
+  -
+    id: 3
+    name: Alfabank
+    bic: 987654321
+    is_deleted: 0
+  -
+    id: 4
+    name: Tinkoffbank
+    bic: 543219876
+    is_deleted: 0
+  -
+    id: 5
+    name: Klukva
+    bic: 543419876
+    is_deleted: 0

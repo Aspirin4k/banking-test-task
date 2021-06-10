@@ -18,12 +18,14 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
-abstract public class EntityController<T extends Entity> {
+abstract public class EntityController<ENT extends Entity, DTO> {
     @Autowired
-    private JpaRepository<T, String> repo;
+    private JpaRepository<ENT, String> repo;
+
+    protected abstract ENT convertDTOtoEntity(DTO dto) throws Throwable;
 
     @GetMapping(path = "")
-    public Iterable<T> getEntities(
+    public Iterable<ENT> getEntities(
             @RequestParam(defaultValue = "0") @Min(value = 0) int page,
             @RequestParam(defaultValue = "50") @Min(value = 1) @Max(value = 50) int size
     ) {
@@ -32,8 +34,8 @@ abstract public class EntityController<T extends Entity> {
     }
 
     @GetMapping(value = "/{id}")
-    public T getEntity(@PathVariable("id") String id) throws EntityNotFoundException {
-        Optional<T> entity = this.repo.findById(id);
+    public ENT getEntity(@PathVariable("id") String id) throws EntityNotFoundException {
+        Optional<ENT> entity = this.repo.findById(id);
 
         if (entity.isEmpty()) {
             throw new EntityNotFoundException();
@@ -44,8 +46,9 @@ abstract public class EntityController<T extends Entity> {
 
     @PostMapping(path = "")
     public ResponseEntity<Map<String, String>> createEntity(
-            @Valid @RequestBody T entity
-    ) throws EntityNotFoundException {
+            @Valid @RequestBody DTO dto
+    ) throws Throwable {
+        ENT entity = this.convertDTOtoEntity(dto);
         this.repo.save(entity);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -54,13 +57,14 @@ abstract public class EntityController<T extends Entity> {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<Void> updateEntity(
-            @Valid @RequestBody T entity,
+            @Valid @RequestBody DTO dto,
             @PathVariable("id") String id
-    ) throws EntityNotFoundException {
+    ) throws Throwable {
         if (!this.repo.existsById(id)) {
             throw new EntityNotFoundException();
         }
 
+        ENT entity = this.convertDTOtoEntity(dto);
         entity.setId(id);
         this.repo.save(entity);
         return ResponseEntity

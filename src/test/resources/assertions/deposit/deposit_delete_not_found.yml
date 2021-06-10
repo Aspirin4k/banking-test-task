@@ -1,0 +1,29 @@
+deposit:
+  -
+    id: 1
+    client_id: 1
+    bank_id: 1
+    percent: 15.4
+    months: 12
+    is_deleted: 0
+  -
+    id: 2
+    client_id: 2
+    bank_id: 1
+    percent: 11.2
+    months: 2
+    is_deleted: 0
+  -
+    id: 3
+    client_id: 4
+    bank_id: 3
+    percent: 5
+    months: 3
+    is_deleted: 0
+  -
+    id: 4
+    client_id: 4
+    bank_id: 5
+    percent: 5
+    months: 3
+    is_deleted: 1

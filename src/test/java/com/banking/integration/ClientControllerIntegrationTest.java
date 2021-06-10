@@ -1,6 +1,6 @@
 package com.banking.integration;
 
-import com.banking.entity.Client;
+import com.banking.dto.ClientDTO;
 import com.banking.entity.LegalEntityType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.database.rider.core.api.dataset.DataSet;
@@ -84,7 +84,7 @@ public class ClientControllerIntegrationTest extends DbUnitTestCase {
     @DataSet("fixtures/client.yml")
     @ExpectedDataSet("assertions/client/client_create.yml")
     public void testCreateClient() throws Exception {
-        Client client = new Client();
+        ClientDTO client = new ClientDTO();
         client.setName("Richard");
         client.setShortName("R");
         client.setAddress("Ekat");
@@ -125,7 +125,7 @@ public class ClientControllerIntegrationTest extends DbUnitTestCase {
     @DataSet("fixtures/client.yml")
     @ExpectedDataSet("assertions/client/client_update.yml")
     public void testUpdateClient() throws Exception {
-        Client client = new Client();
+        ClientDTO client = new ClientDTO();
         client.setName("Richard");
         client.setShortName("R");
         client.setAddress("Ekat");
@@ -163,7 +163,7 @@ public class ClientControllerIntegrationTest extends DbUnitTestCase {
     @Test
     @DataSet("fixtures/client.yml")
     public void testUpdateClientNotFound() throws Exception {
-        Client client = new Client();
+        ClientDTO client = new ClientDTO();
         client.setName("Richard");
         client.setShortName("R");
         client.setAddress("Ekat");

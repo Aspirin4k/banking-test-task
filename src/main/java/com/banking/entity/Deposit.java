@@ -1,6 +1,5 @@
 package com.banking.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -29,15 +28,9 @@ public class Deposit implements com.banking.entity.Entity {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
-    @NotBlank
-    @Transient
-    private String clientId;
     @ManyToOne
     @JoinColumn(name = "bank_id")
     private Bank bank;
-    @NotBlank
-    @Transient
-    private String bankId;
 
     public String getId() {
         return id;
@@ -75,11 +68,6 @@ public class Deposit implements com.banking.entity.Entity {
         return client;
     }
 
-    public String getClientId() {
-        return null == client ? clientId : client.getId();
-    }
-
-    @JsonIgnore
     public void setClient(Client client) {
         this.client = client;
     }
@@ -88,20 +76,7 @@ public class Deposit implements com.banking.entity.Entity {
         return bank;
     }
 
-    public String getBankId() {
-        return null == bank ? bankId : bank.getId();
-    }
-
-    @JsonIgnore
     public void setBank(Bank bank) {
         this.bank = bank;
-    }
-
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
-
-    public void setBankId(String bankId) {
-        this.bankId = bankId;
     }
 }

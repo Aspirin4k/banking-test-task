@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.Pattern;
 import java.util.Set;
 
 @Entity
@@ -22,7 +22,7 @@ public class Bank implements com.banking.entity.Entity {
     @Length(max = 255)
     private String name;
     @NotBlank
-    @Size(min = 9, max = 9)
+    @Pattern(regexp = "^\\d{9}$")
     private String BIC;
     private boolean isDeleted = false;
     @OneToMany(mappedBy = "bank", cascade = CascadeType.REMOVE)
