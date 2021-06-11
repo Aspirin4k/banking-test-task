@@ -326,4 +326,49 @@ public class DepositControllerIntegrationTest extends DbUnitTestCase {
         this.mvc.perform(delete("/deposit/100500"))
                 .andExpect(status().isNoContent());
     }
+
+    @Test
+    @DataSet({
+            "fixtures/bank.yml",
+            "fixtures/client.yml",
+            "fixtures/deposit.yml"
+    })
+    public void testSearchOrderByDate() throws Exception {
+        this.mvc.perform(
+                post("/deposit/search")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"dateOpenedOrder\":\"DESC\",\"size\":2}")
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+
+                .andExpect(jsonPath("$.items", hasSize(2)))
+                .andExpect(jsonPath("$.total", is(3)))
+                .andExpect(jsonPath("$.has_more", is(true)))
+
+                .andExpect(jsonPath("$.items[0].id", is("2")))
+                .andExpect(jsonPath("$.items[1].id", is("1")));
+    }
+
+    @Test
+    @DataSet({
+            "fixtures/bank.yml",
+            "fixtures/client.yml",
+            "fixtures/deposit.yml"
+    })
+    public void testSearchOrderBBic() throws Exception {
+        this.mvc.perform(
+                post("/deposit/search")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"bic\":\"987654321\"}")
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+
+                .andExpect(jsonPath("$.items", hasSize(1)))
+                .andExpect(jsonPath("$.total", is(1)))
+                .andExpect(jsonPath("$.has_more", is(false)))
+
+                .andExpect(jsonPath("$.items[0].id", is("3")));
+    }
 }

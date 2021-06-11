@@ -45,6 +45,13 @@ public class DepositController extends EntityController<Deposit, DepositDTO> {
         );
     }
 
+    @PostMapping(path = "/search")
+    public Iterable<Deposit> search(
+            @Valid @RequestBody DepositSearch criteria
+    ) {
+        return this.repo.findAll(criteria.toSpecification(), criteria.toPageable());
+    }
+
     @Override
     protected Deposit convertDTOtoEntity(DepositDTO dto) throws EntityNotFoundException {
         Optional<Bank> bank = this.bankRepository.findById(dto.getBankId());

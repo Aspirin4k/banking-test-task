@@ -181,8 +181,15 @@ public class ClientControllerIntegrationTest extends DbUnitTestCase {
     }
 
     @Test
-    @DataSet("fixtures/client.yml")
-    @ExpectedDataSet("assertions/client/client_delete.yml")
+    @DataSet({
+            "fixtures/bank.yml",
+            "fixtures/client.yml",
+            "fixtures/deposit.yml",
+    })
+    @ExpectedDataSet({
+            "assertions/client/client_delete.yml",
+            "assertions/client/deposit_delete.yml",
+    })
     public void testDeleteClient() throws Exception {
         this.mvc.perform(delete("/client/2"))
                 .andExpect(status().isNoContent());
